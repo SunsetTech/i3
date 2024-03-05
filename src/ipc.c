@@ -910,7 +910,7 @@ static void dump_bar_config(yajl_gen gen, Barconfig *config) {
 }
 
 IPC_HANDLER(tree) {
-    setlocale(LC_NUMERIC, "C");
+
     yajl_gen gen = ygenalloc();
     dump_node(gen, croot, false);
     setlocale(LC_NUMERIC, "");
@@ -1114,6 +1114,20 @@ IPC_HANDLER(get_version) {
     y(get_buf, &payload, &length);
 
     ipc_send_client_message(client, length, I3_IPC_REPLY_TYPE_VERSION, payload);
+    y(free);
+}
+
+IPC_HANDLER(get_focusmode_state) {
+    yajl_gen gen = ygenalloc();
+    y(map_open);
+    ystr("state");
+    y(bool, config.focusmode);
+    y(map_close);
+    const unsigned char *payload;
+    ylength length;
+    y(get_buf, &payload, &length);
+
+    ipc_send_client_message(client, length, I3_IPC_REPLY_TYPE_GET_FOCUSMODE_STATE, payload);
     y(free);
 }
 
@@ -1425,7 +1439,7 @@ IPC_HANDLER(get_binding_state) {
 
 /* The index of each callback function corresponds to the numeric
  * value of the message type (see include/i3/ipc.h) */
-handler_t handlers[13] = {
+handler_t handlers[14] = {
     handle_run_command,
     handle_get_workspaces,
     handle_subscribe,
@@ -1439,6 +1453,7 @@ handler_t handlers[13] = {
     handle_send_tick,
     handle_sync,
     handle_get_binding_state,
+    handle_get_focusmode_state,
 };
 
 /*

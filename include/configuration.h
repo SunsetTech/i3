@@ -104,6 +104,7 @@ struct Mode {
  *
  */
 struct Config {
+    bool focusmode;
     const char *terminal;
     i3Font font;
 

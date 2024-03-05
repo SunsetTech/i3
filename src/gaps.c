@@ -15,7 +15,7 @@
  */
 gaps_t calculate_effective_gaps(Con *con) {
     Con *workspace = con_get_workspace(con);
-    if (workspace == NULL) {
+    if (workspace == NULL || config.focusmode == true) {
         return (gaps_t){0, 0, 0, 0, 0};
     }
 

@@ -44,6 +44,7 @@ state INITIAL:
   'mode' -> MODE
   'bar' -> BAR
   'gaps' -> GAPS
+  'extension_focusmode' -> FOCUSMODE
 
 state CRITERIA:
   ctype = 'class'       -> CRITERION
@@ -103,6 +104,10 @@ state SHMLOG:
 state DEBUGLOG:
   argument = 'toggle', 'on', 'off'
     -> call cmd_debuglog($argument)
+
+state FOCUSMODE:
+  argument = 'toggle', 'on', 'off'
+    -> call cmd_focusmode($argument)
 
 # border normal|pixel [<n>]
 # border none|1pixel|toggle

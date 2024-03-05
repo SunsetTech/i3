@@ -2558,3 +2558,27 @@ void cmd_gaps(I3_CMD, const char *type, const char *scope, const char *mode, con
 error:
     ysuccess(false);
 }
+
+void cmd_focusmode(I3_CMD, const char *argument) {
+    if (!strcmp(argument, "toggle")) {
+        config.focusmode = !config.focusmode;
+        cmd_output->needs_tree_render=true;
+        ysuccess(true);
+    } else if (!strcmp(argument, "on")) {
+        config.focusmode = true;
+        cmd_output->needs_tree_render=true;
+        ysuccess(true);
+    } else if (!strcmp(argument, "off")) {
+        config.focusmode = false;
+        cmd_output->needs_tree_render=true;
+        ysuccess(true);
+    } else if (!strcmp(argument, "state")) {
+        y(map_open);
+        ystr("success");
+        y(bool, true);
+        ystr("state");
+        y(bool, config.focusmode);
+        y(map_close);
+    }
+    //render_con(croot);
+}
