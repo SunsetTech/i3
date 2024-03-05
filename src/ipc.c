@@ -910,7 +910,7 @@ static void dump_bar_config(yajl_gen gen, Barconfig *config) {
 }
 
 IPC_HANDLER(tree) {
-
+    setlocale(LC_NUMERIC, "C");
     yajl_gen gen = ygenalloc();
     dump_node(gen, croot, false);
     setlocale(LC_NUMERIC, "");
